@@ -1,5 +1,5 @@
 <!-- popup.html -->
-<!-- The script tags now point to local files instead of web URLs. -->
+<!-- This is the HTML for the little window that appears when you click the extension icon. -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,13 +16,18 @@
       margin-top: 0;
       text-align: center;
     }
-    #fileName {
+    input, textarea {
       width: 100%;
       padding: 8px;
       margin-bottom: 10px;
       border: 1px solid #dddfe2;
       border-radius: 6px;
       box-sizing: border-box;
+      font-family: inherit;
+    }
+    textarea {
+      resize: vertical;
+      min-height: 60px;
     }
     #sendBtn {
       width: 100%;
@@ -50,6 +55,7 @@
 <body>
   <h3>Send Print Petition</h3>
   <input type="text" id="fileName" placeholder="Enter file name...">
+  <textarea id="notes" placeholder="Add a note (e.g., 'Print in blue PLA')"></textarea>
   <button id="sendBtn">Send Print Petition</button>
   <div id="status"></div>
 

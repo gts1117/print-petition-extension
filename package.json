@@ -1,0 +1,11 @@
+{
+  "name": "print-petition-extension",
+  "version": "1.0.0",
+  "description": "A Chrome extension to send print petitions.",
+  "private": true,
+  "scripts": {
+    "start": "echo \"This is a Chrome extension, not a web server. To run it, load the directory as an 'unpacked extension' in Chrome.\""
+  },
+  "author": "",
+  "license": "ISC"
+}

@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Paige's Print Petitions",
+  "name": "Print Petition",
   "version": "1.0",
-  "description": "Send a 3D print request to the Notification Receiver.",
+  "description": "A simple extension to send a 'print petition' from any webpage.",
   "permissions": [
     "activeTab",
     "scripting"
@@ -25,6 +25,5 @@
       "matches": ["<all_urls>"],
       "js": ["content.js"]
     }
-    
   ]
 }

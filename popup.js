@@ -52,8 +52,16 @@ sendBtn.addEventListener('click', () => {
       target: { tabId: tab.id },
       function: findBestImage,
     }, (injectionResults) => {
-      // Handle potential errors from script injection
-      const imageUrl = (injectionResults && injectionResults[0]) ? injectionResults[0].result : null;
+      if (chrome.runtime.lastError) {
+        console.error(`Script injection failed: ${chrome.runtime.lastError.message}`);
+        // The script can fail on certain pages (e.g., chrome://).
+        // We can still proceed, but we won't have an image URL.
+        statusDiv.textContent = 'Could not get image, but sending...';
+      }
+
+      // The result might be null if no suitable image was found on the page.
+      const firstResult = injectionResults && injectionResults[0];
+      const imageUrl = firstResult ? firstResult.result : null;
 
       // Prepare the data to be sent to Firestore
       const notificationData = {
@@ -90,9 +98,10 @@ function findBestImage() {
   let bestImage = null;
   let maxArea = 0;
 
-  document.images.forEach(img => {
+  // `document.images` is an HTMLCollection, not an Array. It needs to be converted.
+  Array.from(document.images).forEach(img => {
     const area = img.width * img.height;
-    if (img.width > 200 && img.height > 200 && area > maxArea) {
+    if (img.src && img.width > 200 && img.height > 200 && area > maxArea) {
       maxArea = area;
       bestImage = img.src;
     }
@@ -100,7 +109,7 @@ function findBestImage() {
 
   if (!bestImage) {
     const ogImage = document.querySelector('meta[property="og:image"]');
-    if (ogImage) {
+    if (ogImage && ogImage.content) {
       bestImage = ogImage.content;
     }
   }
